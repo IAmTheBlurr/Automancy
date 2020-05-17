@@ -1,0 +1,5 @@
+pytest
+chronomancy
+lxml==4.2.5
+selenium==3.14.1
+webvtt-py==0.4.2
