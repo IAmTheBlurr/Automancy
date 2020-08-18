@@ -32,7 +32,7 @@ class Elemental(Model):
 
         """
         super().__init__()
-        self.__browser = None
+        self.browser = Browser.find_driver()
         self.__uses_w3c = uses_w3c
         self.__browser_used = ''
 
@@ -66,17 +66,6 @@ class Elemental(Model):
         """
         for key, value in options:
             setattr(self, key, value)
-
-    @property
-    def browser(self):
-        if not self.__browser:
-            self.browser = Browser.find_driver()
-
-        return self.__browser
-    
-    @browser.setter
-    def browser(self, value):
-        self.__browser = value
 
     @property
     def clickable(self):
