@@ -10,13 +10,13 @@ class Browser(object):
     @staticmethod
     def __search_in_frame_locals(frame):
         """
-        Does the work of searching through the first layer of the frame stack for
-        TestObject.find_browser()
+        Does the work of searching through the first layer of the frame stack for Elemental.find_browser()
 
-        :param frame: Python frame stack object
-        :type frame:
-        :return: The Selenium WebDriver object
-        :rtype: None, WebDriver
+        Args:
+            frame ():
+
+        Returns:
+
         """
         browser = None
 
