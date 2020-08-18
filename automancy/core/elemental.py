@@ -576,7 +576,7 @@ class Elemental(Model):
         Returns: A duplicate of this object keeping the name and locator properties.
 
         """
-        return self.__class__(self.name, self.locator)
+        return self.__class__(self.locator, self.name, self.system_name)
 
     def properties(self):
         """
