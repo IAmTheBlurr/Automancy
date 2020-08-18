@@ -1,9 +1,7 @@
 """ ./core/elemental.py """
-import inspect
-
 from lxml.etree import XPath, XPathSyntaxError
 
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, ElementNotInteractableException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as wait
@@ -12,12 +10,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from .automancy_chain import AutomancyChain
 from .browser import Browser
 from .external_javascript import drag_and_drop
+from .model import Model
 
 from ..decorators import deprecated, interaction
 
 
-class Elemental(object):
-    def __init__(self, locator, name='', uses_w3c: bool = False):
+class Elemental(Model):
+    """ The base object for all web element type of component """
+    def __init__(self, locator, human_name, system_name, uses_w3c: bool = False, **kwargs):
         """
         The base class for more specific types of elements.  This test object contains general
         methods that can be used by any Selenium WebElement.  Also maintains some state information
@@ -27,12 +27,13 @@ class Elemental(object):
 
         Args:
             locator (str): Xpath string for the lookup
-            name (str): Optional, allows for manual naming of objects.  Default is derivative based on instantiation.
+            human_name (str): the human readable name of the Elemental; used for ease of log and reporting output
+            system_name (str): the system-readable name of the Elemental; used for internal reference only
 
         """
+        super().__init__()
         self.__browser = None
         self.__uses_w3c = uses_w3c
-        self.__name = name
         self.__browser_used = ''
 
         self._text = ''
@@ -40,12 +41,31 @@ class Elemental(object):
         self._width = ''
 
         self.locator = locator
+        self.name = human_name
+        self.system_name = system_name
         self.x = ''
         self.y = ''
+
+        if 'options' in kwargs:
+            self.__process_options(kwargs['options'])
 
     @staticmethod
     def __type_error_message(other_element):
         return 'Element to compare against is not an instance of Elemental.  Received: {}'.format(type(other_element))
+
+    def __process_options(self, options: dict) -> None:
+        """
+        Sets the values om options as attributes of self
+
+        Args:
+            options (dict): contains additional properties as a dictionary
+
+        Returns:
+            None
+
+        """
+        for key, value in options:
+            setattr(self, key, value)
 
     @property
     def browser(self):
@@ -72,6 +92,36 @@ class Elemental(object):
                         self.browser_used))
 
     @property
+    def computed_styles(self) -> dict:
+        """
+        Gets the full list of computed styles from an element.
+
+        Does not rely on the styles="*" html attribute.
+
+        Executes a custom javascript command to return the values of all applied styles
+
+        Returns:
+            dict: All computed styles for an element
+
+        """
+        javascript_getter = '''
+        var s = '';
+        var o = getComputedStyle(arguments[0]);
+        for(var i = 0; i < o.length; i++) {s+=o[i] + ':' + o.getPropertyValue(o[i])+';';} 
+        return s;
+        '''
+
+        computed_styles = {}
+        styles_string = self.browser.execute_script(javascript_getter, self.element())
+
+        for style in styles_string.split(';'):
+            if style:
+                split_style = style.split(':')
+                computed_styles[split_style[0]] = split_style[1].replace('""', '')
+
+        return computed_styles
+
+    @property
     def enabled(self):
         """
         Getter wrapper for the Selenium WebElement "is_enabled()" method
@@ -92,86 +142,13 @@ class Elemental(object):
             (bool): True if the element is enabled, False if not
 
         """
-        if self.browser_used == 'Safari':
+        if self.browser_used.lower() == 'safari':
             disabled_attribute = self.element().get_attribute('disabled')
 
             if disabled_attribute and disabled_attribute == 'true':
                 return False
 
         return self.element().is_enabled()
-
-    # TODO => Write tests against the logic here.
-    #  self.__name should find the objects reference string but isn't.
-    @property
-    def name(self):
-        """
-        The "name" of the object instance as it was defined at instantiation (See example)
-
-        Notes:
-            Historically (before the current implementation), all Elemental based classes were required to
-            be instantiated with a "name" parameter.  This parameter was an arbitrary string that Automancy
-            used internally in order to allow objects to associate with each other dynamically.
-
-            ( See the Grid method "include(...)" as an example )
-
-            This resulted in two annoying truths which the current implementation seeks to resolves.
-
-            1. It became evident that the required 'name' parameter was redundant in most cases because
-            Elemental based classes were being instantiated with the 'name' argument being identical
-            to the name of the object itself (left of the equal sign).
-
-            2. The process of defining Automancy objects lead to super ugly definitions which took longer
-            than it needed to while typing things out, and the result contained visual/perceptual clutter.
-
-            The result of these two facts combined made utilizing Automancy less intuitive, more annoying,
-            and generally uglier than is morally acceptable.
-
-            While redundant a majority of the time for Elemental instantiation previously, the 'name' property
-            is vital for all low-level functionality related to dynamic object creation and associations.
-
-            The 'name' property is often used for the keys in dictionaries of a Elementals logical children.
-            Dropdown Automancy objects are a good example.  Each time the .open() method is called on a Dropdown,
-            the current existing options of the dropdown web element are defined as 'children' to the Dropdown
-            in the 'options' dictionary.  Keys for the 'options' dictionary are derived from the 'name' property
-            while the related value for a key is the actual Automancy based object which has the same string for
-            its 'name' property.  When a string is passed to __getitem__ for a Dropdown object, the string is
-            searched for within the keys of the 'options' dictionary for that Dropdown instance.
-
-            That kind of process exists within Automancy in many places and all execute implicitly, no fuss or muss
-            for humans to vomit over, all pivoting around the 'name' property that is sometimes required explicitly
-            but most of the time isn't.
-
-            In order to meet in the middle, the previously required 'name' parameter is now optional.  The  default
-            behavior during instantiation now is to inspect the calling frames for the object so that for the string
-            that makes up the "variable name".
-
-        Examples:
-            BEFORE ('name' parameter required):
-            new_playlist = Elemental('new_playlist', '//button[@id="create_playlist"]')
-            new_playlist.name
-            'new_playlist'
-
-            AFTER ('name' parameter not required):
-            new_playlist = Elemental('//button[@id="create_playlist"]')
-            new_playlist.name
-            'new_playlist'
-
-        Returns:
-            (str) the name of the object that was used during object instantiation.
-
-        """
-        if not self.__name:
-            frame = inspect.currentframe().f_back
-            temp = {**frame.f_globals, **frame.f_locals}
-            for key, value in temp.items():
-                if isinstance(value, self.__class__) and hash(self) == hash(value):
-                    self.__name = key
-
-        return self.__name
-
-    @name.setter
-    def name(self, value):
-        self.__name = value
 
     @property
     def background_css(self):
@@ -299,6 +276,22 @@ class Elemental(object):
         """ Returns the center point y coord of the element instead of the top left """
         return int(self.y_pos + self.height / 2)
 
+    def add(self, elemental_class, locator: str, human_name: str, system_name: str = '') -> None:
+        """
+        Override for the Model class `.add(...)` method in order to be able to concatenate the xpath string
+
+        Args:
+            elemental_class (): a pointer to the class of object which will be instantiated as a child of this model
+            locator (str): the segmented xpath string meant to be used as a locator for the element being added
+            human_name (str): a human readable name useful in being displayed in logs or in other meaningful output
+            system_name (str): OPTIONAL, a system readable name meant as an internal reference value
+
+        Returns:
+            None
+
+        """
+        super().add(elemental_class, self.locator + locator, human_name, system_name)
+
     def drag_to_element(self, target_element):
         """
         Executes custom javascript code which gets around drag-and-drop limitations of Selenium
@@ -405,30 +398,11 @@ class Elemental(object):
         """ Uses Keys.ENTER on the Selenium WebElement """
         self.element().send_keys(Keys.RETURN)
 
-    def add(self, *args):
-        """
-        Takes any number of Elementals and adds them to this Elemental as class attributes.
+    @property
+    def attributes(self) -> dict:
+        return self.get_attributes()
 
-        This allows the easy nesting of Elementals that are associated with each other in a
-        hierarchical structure as they would be represented in the DOM.
-
-        The ultimate intent is to be able to associate objects together programmatically with
-        the long term goal of allowing some process to map out objects automatically.
-
-        The "name" property of the test object is used as the attribute name and the Elemental
-        itself as the value.
-
-        Args:
-            *args (Elemental): Any number of Elementals
-
-        Returns:
-            None
-
-        """
-        for component in args:
-            setattr(self, component.name, component)
-
-    def get_attributes(self):
+    def get_attributes(self) -> dict:
         """
 
         Returns:
@@ -705,10 +679,11 @@ class Elemental(object):
             self.element().click()
 
         except WebDriverException as error:
-            # Many situations prevent .click() from being used because of an overlay making the element unclickable.
-            # In this situations check the error message text to check if this is the case and attempt the work around.
+            # Resolves issues where a permanent overlay in the DOM prevents automated interaction
             if 'Other element would receive the click' in error.msg:
                 self.element().send_keys(Keys.RETURN)
+            elif isinstance(error, ElementNotInteractableException):
+                self.browser.execute_script('arguments[0].click()', self.element())
 
     @interaction
     def change_style(self, attribute, value):
