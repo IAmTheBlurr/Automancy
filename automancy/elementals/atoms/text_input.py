@@ -31,7 +31,7 @@ class TextInput(Elemental):
     @property
     def text(self):
         """
-        Override for the TestObject base class .text property because
+        Override for the Elemental base class .text property because
         we don't want TextInput form elements to use the base class
         getter to override the value that we define as the input value.
 

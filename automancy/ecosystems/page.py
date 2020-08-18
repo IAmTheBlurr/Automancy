@@ -7,8 +7,8 @@ from ..core import Browser
 
 class Page(object):
     """
-    The test object meant to contain data about and controls for an entire page that is being tested
-    Further test objects that are created from here are child elements derived from this objects content
+    The Elemental meant to contain data about and controls for an entire page that is being tested
+    Further Elementals that are created from here are child elements derived from this objects content
     Intended to manage the state of the page and webdriver related to the tests that are being run.
     """
     def __init__(self, url=''):

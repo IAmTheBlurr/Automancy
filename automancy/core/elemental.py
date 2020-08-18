@@ -19,10 +19,10 @@ class Elemental(Model):
     """ The base object for all web element type of component """
     def __init__(self, locator, human_name, system_name, uses_w3c: bool = False, **kwargs):
         """
-        The base class for more specific types of elements.  This test object contains general
+        The base class for more specific types of elements.  This Elemental contains general
         methods that can be used by any Selenium WebElement.  Also maintains some state information
         about the element beyond what the Selenium WebElement will tell you.  Acts a proxy for
-        Selenium WebElement methods to allow them to be accessible by test objects that are specific
+        Selenium WebElement methods to allow them to be accessible by Elementals that are specific
         to any test which extend this class.
 
         Args:
@@ -581,7 +581,7 @@ class Elemental(Model):
 
     def duplicate(self):
         """
-        Effectively creates a duplicate of the test object but only retaining the name and locator
+        Effectively creates a duplicate of the Elemental but only retaining the name and locator
         from the original
 
         Returns: A duplicate of this object keeping the name and locator properties.

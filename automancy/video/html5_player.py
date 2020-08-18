@@ -215,7 +215,7 @@ class HTML5Player(Elemental):
             self.transcript.get_lines()
 
 
-class VideoContainer(TestObject):
+class VideoContainer(Elemental):
     """ The container objects for surrounding element which holds a VideoViewport plus other elements """
     def __init__(self, locator, name=''):
         super().__init__(locator, name=name)
@@ -223,13 +223,13 @@ class VideoContainer(TestObject):
         self.height = 0.0
 
 
-class VideoViewport(TestObject):
+class VideoViewport(Elemental):
     """ The container object for the video feed itself """
     def __init__(self, locator, name=''):
         super().__init__(locator, name=name)
 
 
-class VideoControls(TestObject):
+class VideoControls(Elemental):
     """ The container object for playback and volume controls """
     def __init__(self, locator, name=''):
         super().__init__(locator, name=name)
@@ -246,7 +246,7 @@ class VideoControls(TestObject):
         self.full_screen_button = None
 
 
-class VideoTranscript(TestObject):
+class VideoTranscript(Elemental):
     """ Container for caption/transcription elements and controls """
     def __init__(self, locator, name='', line_locator='', selector_locator='', line_time_locator='', line_text_locator=''):
         super().__init__(locator, name=name)
@@ -345,7 +345,7 @@ class VideoTranscript(TestObject):
         return False if False in lines_match else True
 
 
-class VideoTranscriptLine(TestObject):
+class VideoTranscriptLine(Elemental):
     """ Container for a single transcription line """
     def __init__(self, locator, name='', time_locator='', text_locator='', time_from_data_begin=False):
         super().__init__(locator, name=name)
@@ -396,19 +396,19 @@ class VideoTranscriptLine(TestObject):
         self.line_time = value
 
 
-class VideoTranscriptLineText(TestObject):
+class VideoTranscriptLineText(Elemental):
     """ Container for the text for a transcript line """
     def __init__(self, locator, name=''):
         super().__init__(locator, name=name)
 
 
-class VideoTranscriptLineTime(TestObject):
+class VideoTranscriptLineTime(Elemental):
     """ Container for the time for a transcript line """
     def __init__(self, locator, name=''):
         super().__init__(locator, name=name)
 
 
-class VideoCaptionLine(TestObject):
+class VideoCaptionLine(Elemental):
     """ Container for the captions that will appear over the video viewport """
     def __init__(self, locator, name=''):
         super().__init__(locator, name=name)

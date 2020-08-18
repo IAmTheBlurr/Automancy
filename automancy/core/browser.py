@@ -53,12 +53,12 @@ class Browser(object):
     @staticmethod
     def __search_in_frame_stack(frame):
         """
-        Extension method to TestObject.__search_in_frame_locals(...) as a fail over.
+        Extension method to Elemental.__search_in_frame_locals(...) as a fail over.
 
         If a search through f_locals object for the frame doesn't contain the WebDriver object, this method is
         called in order to search the stack within that frame for it (which is where it generally is).
 
-        This method is only called when a TestObject subclass is instantiated below the highest level of
+        This method is only called when a Elemental subclass is instantiated below the highest level of
         the hierarchy when authoring tests which is sometimes done.
 
         In a sense, this is a fallback method if a test or subsequent test helper isn't written ideally.
