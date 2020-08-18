@@ -12,7 +12,7 @@ from .browser import Browser
 from .external_javascript import drag_and_drop
 from .model import Model
 
-from ..decorators import deprecated, interaction
+from ..decorators import interaction
 
 
 class Elemental(Model):
@@ -778,11 +778,6 @@ class Elemental(Model):
         """
         compare_strings = [text.replace(' ', '').lower() for text in args]
         return len(set(compare_strings)) <= 1
-
-    @deprecated('Use the property self.visible.  Deprecated on March 20th 2019, removal date TBD')
-    def is_visible(self):
-        """ DEPRECATED: Use the property self.visible """
-        return self.visible
 
     def valid_xpath(self, to_validate=''):
         """
