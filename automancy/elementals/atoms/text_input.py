@@ -132,7 +132,7 @@ class TextInput(Elemental):
         self.write(text=text)
 
     @interaction
-    def write(self, text=''):
+    def write(self, text: str):
         """
         Writes text to the input field from the self.text property if the optional text argument isn't set.
 
@@ -148,10 +148,6 @@ class TextInput(Elemental):
 
         """
         attempt_counter = 20
-
-        # If the optional parameter isn't set, use the self.text value
-        if not text:
-            text = self.text
 
         # Repeat the send_keys command until the text we intend to input is correctly entered (or until retry maximum is hit)
         while self.value != text:
