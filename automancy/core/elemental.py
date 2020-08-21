@@ -822,3 +822,6 @@ class Elemental(Model):
         else:
             next_handle = self.browser.window_handles.index(current_handle)
             self.browser.switch_to.window(self.browser.window_handles[next_handle + 1])
+
+    def write(self, text: str):
+        return NotImplementedError(f'Method `.write()` is not implement for this object, type: ${type(self)}')
