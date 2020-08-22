@@ -2,16 +2,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as wait
 from selenium.webdriver.support.ui import WebDriverWait
 
-from ..core import Browser
+from ..core import Browser, Model
 
 
-class Page(object):
+class Page(Model):
     """
     The Elemental meant to contain data about and controls for an entire page that is being tested
     Further Elementals that are created from here are child elements derived from this objects content
     Intended to manage the state of the page and webdriver related to the tests that are being run.
     """
     def __init__(self, url=''):
+        Model.__init__(self)
         self.browser = Browser.find_driver()
         self.element = None
         self.url = url
