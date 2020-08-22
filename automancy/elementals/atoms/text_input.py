@@ -29,7 +29,7 @@ class TextInput(Elemental):
         return self.text
 
     @property
-    def text(self):
+    def text(self) -> str:
         """
         Override for the Elemental base class .text property because
         we don't want TextInput form elements to use the base class
@@ -42,7 +42,7 @@ class TextInput(Elemental):
         return self.__text
 
     @text.setter
-    def text(self, value):
+    def text(self, value: str):
         self.__text = value
 
     @property
@@ -95,11 +95,11 @@ class TextInput(Elemental):
         # With all selected, press the delete key to erase
         self.element().send_keys(Keys.DELETE)
 
-    def entered(self):
+    def entered(self) -> str:
         """ Syntactic sugar for the "value" property, was the original implementation, no need to deprecate at the time. """
         return self.value
 
-    def update(self, text=''):
+    def update(self, text: str):
         """
         A concise and (hopefully) full-proof way of changing the text of a text input element.
 
