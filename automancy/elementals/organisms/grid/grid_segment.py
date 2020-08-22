@@ -13,7 +13,7 @@ class GridSegment(Elemental):
         if hasattr(self, item):
             return getattr(self, item)
         else:
-            self[item] = Elemental('', item, item.lower().replace(' ', '-'))
+            self[item] = Elemental('', item, item.lower().replace(' ', '_').strip())
             return getattr(self, item)
 
     def __setitem__(self, key, value) -> None:

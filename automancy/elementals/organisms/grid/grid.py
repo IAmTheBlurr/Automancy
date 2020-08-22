@@ -13,7 +13,7 @@ class Grid(Elemental):
         Notes:
             Grid.segment_components is designed to hold additional properties which exist in each
             and all grid segment held within Grid.segments at a minimum.  These components are
-            intended to be a name and TestObject based object.
+            intended to be a name and Elemental based object.
 
         Args:
             locator (str): xpath string for the lookup
@@ -22,7 +22,7 @@ class Grid(Elemental):
             segment_locator (str): optional, xpath extension to be able to look for grid segments.
 
         """
-        super().__init__(locator, human_name, system_name)
+        Elemental.__init__(self, locator, human_name, system_name)
         self.segments = GridSegments()
         self.segments_locator = locator + segment_locator
         self.segment_components = {}
@@ -46,7 +46,8 @@ class Grid(Elemental):
             locator (str): Same as TestObject "locator"
 
         """
-        new_segment = GridSegment(locator, name=name)
+        system_name = name.lower().replace(' ', '_').strip(' ')
+        new_segment = GridSegment(locator, name, system_name)
         self.add_components(segment=new_segment)
         self.segments[name] = new_segment
 
@@ -65,7 +66,7 @@ class Grid(Elemental):
     def new_segment(self, name='', locator=''):
         """
         Adds a new segment to the grid using only the name and locator
-        that would be used to construct a TestObject based object.
+        that would be used to construct a Elemental based object.
         """
         new_name = name
         new_locator = locator
@@ -224,18 +225,18 @@ class Grid(Elemental):
         """
         return self.browser.find_elements_by_xpath(self.segments_locator)
 
-    def include(self, test_object, overwrite=False):
+    def include(self, elemental, overwrite=False):
         """
-        Adds a TestObject to the Grid's segment_components dictionary.
+        Adds a Elemental to the Grid's segment_components dictionary.
 
         Notes:
             The segment_components property is a container that holds objects
             that can be added as instance properties of each segment.
 
         Args:
-            test_object (TestObject, Dropdown): The object that is being added as a component
+            elemental (Elemental, Dropdown): The object that is being added as a component
             overwrite (bool): Optional, acts as protection against overwriting existing components.
 
         """
-        if test_object.name not in self.segment_components.keys() or overwrite:
-            self.segment_components[test_object.name] = test_object
+        if elemental.name not in self.segment_components.keys() or overwrite:
+            self.segment_components[elemental.name] = elemental
