@@ -5,7 +5,7 @@ from .table_data import TableCell
 
 
 class TableRow(Elemental):
-    """ Molecule TestObject for Row web elements """
+    """ Molecule Elemental for Row web elements """
     def __init__(self, locator, human_name, system_name, cell_locator='', header=None, selector=''):
         """
         Notes:
@@ -31,7 +31,7 @@ class TableRow(Elemental):
 
         self.selected = False
 
-        # As a special consideration, this can be populated with references to the TestObject
+        # As a special consideration, this can be populated with references to the Elemental
         # types that are expected to exist in each cell for a row.
         # Example: [Button, Label, Label, Image, Link]
         # This example implies that there are five cells in a row and that the first cell is a button
@@ -95,7 +95,7 @@ class TableRow(Elemental):
         making sure that the combined string is valid XPath syntax
 
         Args:
-            original (str): The original locator XPath string for the TestObject
+            original (str): The original locator XPath string for the Elemental
             extension (str): The XPath extension string to be concatenated.
 
         Returns:
@@ -110,7 +110,7 @@ class TableRow(Elemental):
 
     def get_cells(self, header):
         """
-        Goes through all of the cells in the row and populates the object self.cells with Cell type TestObjects.
+        Goes through all of the cells in the row and populates the object self.cells with Cell type Elementals.
 
         Does not interact with the Selenium WebElements here for the cell elements, only to get a count of the
         number of cell elements that are found in the row element

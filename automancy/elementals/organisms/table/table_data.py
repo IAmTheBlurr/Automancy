@@ -2,7 +2,7 @@ from automancy.core import Elemental
 
 
 class TableCell(Elemental):
-    """ Molecule TestObject for Row web elements """
+    """ Molecule Elemental for Row web elements """
     def __init__(self, locator, human_name, system_name, cell_type=None):
         """
         Args:
@@ -16,5 +16,5 @@ class TableCell(Elemental):
         self.color = ''
         self.icon = None
 
-        # E.g. Button, Label, Checkbox, etc (Any UltraBot atom type)
+        # E.g. Button, Label, Checkbox, etc (Any Automancy atom type)
         self.type = cell_type

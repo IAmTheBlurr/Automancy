@@ -39,7 +39,7 @@ class TableBody(Elemental):
         Selects any number of assets in the containing rows list by it's checkbox
 
         Args:
-            rows (List[Row]): List of Row TestObjects that will selected
+            rows (List[Row]): List of Row Elementals that will selected
 
         """
         for row in rows:

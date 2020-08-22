@@ -6,7 +6,7 @@ from .table_options import TableOptions
 
 
 class Table(Elemental):
-    """ Organism Table for collections of smaller TestObjects that make up a Table (rows usually) """
+    """ Organism Table for collections of smaller Elementals that make up a Table (rows usually) """
     def __init__(self, locator, human_name, system_name, options=TableOptions()):
         """
 
@@ -73,7 +73,7 @@ class Table(Elemental):
 
     def include(self, component):
         """
-        Adds a TestObject to the Table's row_components dictionary and the name of the component to the header columns list.
+        Adds a Elemental to the Table's row_components dictionary and the name of the component to the header columns list.
 
         The Table instance must have the 'manual_components' option set to True in order for include() to be used.
 
@@ -81,7 +81,7 @@ class Table(Elemental):
             The row_components property is a container that holds objects that can be added as instance properties of each row.
 
         Args:
-            component (TestObject, Dropdown): The Automancy object that is being added as a component
+            component (Elemental, Dropdown): The Automancy object that is being added as a component
 
         """
         # Make sure that options.manual_components is True for this instance before allowing components to be added
@@ -164,7 +164,7 @@ class Table(Elemental):
 
     def read(self, get_text_now=False):
         """
-        Updates the Table instance through construction of the rows and row cell TestObjects
+        Updates the Table instance through construction of the rows and row cell Elementals
         as well as some of the contextual data such as header column text and cell text (if any)
 
         Simply put: One method call, that's all.
@@ -182,7 +182,7 @@ class Table(Elemental):
             Each TableRow instance will will have a property called "cells"
 
             TableRow.cells is a dictionary of header column name keys and
-            Cell TestObject instance values.
+            Cell Elemental instance values.
 
             The "text" property of each Cell instance will contain the text
             as it is displayed in the DOM.
