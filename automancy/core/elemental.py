@@ -10,12 +10,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from .automancy_chain import AutomancyChain
 from .browser import Browser
 from .external_javascript import drag_and_drop
-from .model import Model
 
 from ..decorators import interaction
 
 
-class Elemental(Model):
+class Elemental(object):
     """ The base object for all web element type of component """
     def __init__(self, locator, human_name, system_name, uses_w3c: bool = False, **kwargs):
         """
@@ -264,22 +263,6 @@ class Elemental(Model):
     def center_y_pos(self):
         """ Returns the center point y coord of the element instead of the top left """
         return int(self.y_pos + self.height / 2)
-
-    def add(self, elemental_class, locator: str, human_name: str, system_name: str = '') -> None:
-        """
-        Override for the Model class `.add(...)` method in order to be able to concatenate the xpath string
-
-        Args:
-            elemental_class (): a pointer to the class of object which will be instantiated as a child of this model
-            locator (str): the segmented xpath string meant to be used as a locator for the element being added
-            human_name (str): a human readable name useful in being displayed in logs or in other meaningful output
-            system_name (str): OPTIONAL, a system readable name meant as an internal reference value
-
-        Returns:
-            None
-
-        """
-        super().add(elemental_class, self.locator + locator, human_name, system_name)
 
     def drag_to_element(self, target_element):
         """
