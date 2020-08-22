@@ -1,10 +1,11 @@
 """ Support for a modal element and it's components """
-from automancy.core import AutomancyChain, Elemental
+from automancy.core import AutomancyChain, Elemental, Model
 
 
-class Modal(Elemental):
+class Modal(Elemental, Model):
     def __init__(self, locator, human_name, system_name):
-        super().__init__(locator, human_name, system_name)
+        Elemental.__init__(self, locator, human_name, system_name)
+        Model.__init__(self)
         self.close_button = None
         self.cancel_button = None
         self.confirm_button = None
