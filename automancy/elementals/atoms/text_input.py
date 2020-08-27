@@ -29,6 +29,10 @@ class TextInput(Elemental):
         return self.text
 
     @property
+    def required(self) -> bool:
+        return self.element().get_attribute('required')
+
+    @property
     def text(self) -> str:
         """
         Override for the Elemental base class .text property because
