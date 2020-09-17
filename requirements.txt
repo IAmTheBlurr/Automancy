@@ -1,0 +1,5 @@
+pytest
+chronomancy
+lxml
+selenium
+webvtt-py
