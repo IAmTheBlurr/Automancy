@@ -25,7 +25,7 @@ class Checkbox(Elemental):
 
     def check(self) -> None:
         """
-        Wrapper for the .click() method in TestObject
+        Wrapper for the .click() method in Elemental
 
         Changes the boolean value for is_checked to True
 
@@ -38,7 +38,7 @@ class Checkbox(Elemental):
 
     def uncheck(self) -> None:
         """
-        Wrapper for the .click() method in TestObject
+        Wrapper for the .click() method in Elemental
 
         Changes the boolean value for is_checked to False
 
