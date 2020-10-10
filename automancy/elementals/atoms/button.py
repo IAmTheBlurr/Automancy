@@ -1,4 +1,4 @@
-""" ./atoms/button.py"""
+""" ./atoms/button.py """
 from automancy.core import Elemental
 
 
