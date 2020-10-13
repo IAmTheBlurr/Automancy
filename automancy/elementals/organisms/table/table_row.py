@@ -1,7 +1,7 @@
 from lxml.etree import XPath, XPathSyntaxError
 
 from automancy.core import Elemental
-from .table_data import TableCell
+from .table_cell import TableCell
 
 
 class TableRow(Elemental):
