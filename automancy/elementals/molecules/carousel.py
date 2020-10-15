@@ -1,3 +1,4 @@
+""" ./elementals/molecules/carousel.py """
 from automancy.core import Elemental, Model
 
 

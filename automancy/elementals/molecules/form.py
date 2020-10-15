@@ -4,7 +4,7 @@ from automancy.core import Elemental, Model
 
 class Form(Elemental, Model):
     """ Organism Form for collections of smaller Elemental that make up a form (inputs, labels, buttons) """
-    def __init__(self, locator, human_name: str, system_name: str):
+    def __init__(self, locator: str, human_name: str, system_name: str):
         """
         Args:
             locator (str): xpath string for the lookup
