@@ -199,7 +199,7 @@ class Dropdown(Elemental):
                 # so we're putting blind handling here to prevent edge case false negatives from stopping tests.
                 pass
 
-    def include(self, test_object):
+    def include(self, elemental):
         """
         Adds a Elemental to the Dropdowns' options dictionary.  A KeyError is raised if an option with an
         existing name is attempting to be included.
@@ -211,26 +211,26 @@ class Dropdown(Elemental):
             things are done properly implicitly.  Using Dropdown.include(...) is completely manual.
 
         Args:
-            test_object (Elemental): The object that is being added as a component
+            elemental (Elemental): The object that is being added as a component
 
         """
         # If an option of the same name already exists, exclude it from the list of options.
-        if test_object.name in self.options.keys():
-            self.exclude(test_object.name)
+        if elemental.name in self.options.keys():
+            self.exclude(elemental.name)
 
         # Check that the new option locator doesn't already include the base dropdown locator as a substring and that they aren't the same.
         # (This would indicate that the user is attempting to use the base object xpath and the option xpath, which is fine, just keep swimming)
-        if self.locator not in test_object.locator and self.locator != test_object.locator:
+        if self.locator not in elemental.locator and self.locator != elemental.locator:
             # An empty or other negative value use the pre-defined options locator xpath.  If not, go ahead and use what we get.
-            if not test_object.locator:
+            if not elemental.locator:
                 # Since we're not collecting options on the fly we need to use the name of the object as an xpath contains text lookup
-                test_object.locator = self.locator + '//*[contains(text(), "{0}")]'.format(test_object.name)
+                elemental.locator = self.locator + '//*[contains(text(), "{0}")]'.format(elemental.name)
             else:
                 if not self.disconnected_options:
-                    test_object.locator = self.locator + test_object.locator
+                    elemental.locator = self.locator + elemental.locator
 
         # Add the new option to the options dictionary, overwriting whatever exists by design (might changes this later)
-        self.options[test_object.name] = test_object
+        self.options[elemental.name] = elemental
 
     def exclude(self, option_name):
         """
