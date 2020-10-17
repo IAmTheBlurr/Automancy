@@ -4,4 +4,5 @@ from .browser import Browser
 from .elemental import Elemental
 from .external_javascript import drag_and_drop
 from .model import Model
+from .sequencer import Sequencer
 from .wait_for_page_load import WaitForPageLoad
