@@ -1,15 +1,12 @@
-""" ./atoms/button.py """
+""" ./atoms/switch.py """
 from automancy.core import Elemental
 
 
-class Button(Elemental):
-    """ Atom Elemental for button DOM objects """
+class Switch(Elemental):
+    """ Atom Elemental for switch form option DOM objects """
     def __init__(self, locator: str, human_name: str, system_name: str):
         """
-        Represents a basic button DOM element of any kind which could exist on a page.
-
-        It's not a sin to use this class for anything which you might think as a button
-        but isn't necessarily a <button> element.
+        Represents a switch form options DOM element which can only be on or off.
 
         Args:
             locator (str): xpath string for the lookup
@@ -18,3 +15,7 @@ class Button(Elemental):
 
         """
         super().__init__(locator, human_name, system_name)
+
+    def flip(self):
+        """ If the position is off, flip it on.  If on, flip it off.  Duh... """
+        self.click()

@@ -42,8 +42,8 @@ class Grid(Elemental):
         the new segment to the Grid.segments dictionary.
 
         Args:
-            name (str): Same as TestObject "name"
-            locator (str): Same as TestObject "locator"
+            name (str): Same as Elemental "name"
+            locator (str): Same as Elemental "locator"
 
         """
         system_name = name.lower().replace(' ', '_').strip(' ')
