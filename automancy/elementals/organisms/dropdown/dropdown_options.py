@@ -9,7 +9,7 @@ class DropdownOptions(object):
 
         Keyword Args:
             option_locator (str): Xpath string that is used to look up each of the option rows within the dropdown.
-            option_type (TestObject): A reference to the TestObject class
+            option_type (Elemental): A reference to the Elemental class
             static_options (bool): Optional (default False), If True, get_options() will not be used on .open() if the options dictionary is not empty
             disconnected_options (bool): Optional (default False), If True, the dropdowns' option rows are not xpath children of the dropdown itself (See Notes)
             option_selector_extension (str): Optional (default ''), An additional xpath for situations in which a dropdown option uses a checkbox or something for selection.
