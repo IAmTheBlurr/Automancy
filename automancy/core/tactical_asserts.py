@@ -2,7 +2,6 @@
 from time import sleep
 
 from automancy.core import Elemental
-from automancy import HTML5VideoPlayer
 
 from selenium.common.exceptions import WebDriverException
 
@@ -75,7 +74,7 @@ class TacticalAsserts(object):
 
         raise AssertionError('Assertion Error: The element named "{}" did not gain visibility within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
 
-    def video_begins_playing(self, element: HTML5VideoPlayer) -> HTML5VideoPlayer:
+    def video_begins_playing(self, element):
         self.__verify_is_elemental(element)
         while self.timeout_count < self.max_timeouts:
             try:
