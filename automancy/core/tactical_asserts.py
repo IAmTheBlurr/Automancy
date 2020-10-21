@@ -1,8 +1,8 @@
 """ ./asserts/assert_core.py """
 from time import sleep
 
-from ..core import Elemental
-from ..video.html5_player import HTML5Player
+from automancy.core import Elemental
+from automancy import HTML5VideoPlayer
 
 from selenium.common.exceptions import WebDriverException
 
