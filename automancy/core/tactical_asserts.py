@@ -18,7 +18,7 @@ class TacticalAsserts(object):
     @staticmethod
     def __verify_is_elemental(element):
         if not issubclass(element.__class__, Elemental):
-            raise TypeError(f'Input element must be a subclass of Elemental, found: {type(element)}')
+            raise TypeError('Input element must be a subclass of Elemental, found: {}'.format(type(element)))
 
     def becomes_interactable(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
@@ -38,7 +38,7 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not gain clickability within the timeout limit ({self.max_timeouts} seconds)')
+        raise AssertionError('Assertion Error: The element named "{}" did not gain clickability within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
 
     def gains_existence(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
@@ -51,7 +51,7 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not come into existence within the timeout limit ({self.max_timeouts} seconds)')
+        raise AssertionError('Assertion Error: The element named "{}" did not come into existence within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
 
     def gains_visibility(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
@@ -73,9 +73,9 @@ class TacticalAsserts(object):
                 self.timeout_count = 0
                 return element
 
-        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not gain visibility within the timeout limit ({self.max_timeouts} seconds)')
+        raise AssertionError('Assertion Error: The element named "{}" did not gain visibility within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
 
-    def video_begins_playing(self, element: HTML5Player) -> HTML5Player:
+    def video_begins_playing(self, element: HTML5VideoPlayer) -> HTML5VideoPlayer:
         self.__verify_is_elemental(element)
         while self.timeout_count < self.max_timeouts:
             try:
@@ -85,4 +85,4 @@ class TacticalAsserts(object):
                 sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError(f'Assertion Error: Video did not begin playing within {self.max_timeouts * self.sleep_time} seconds')
+        raise AssertionError('Assertion Error: Video did not begin playing within {} seconds'.format(self.max_timeouts * self.sleep_time))
