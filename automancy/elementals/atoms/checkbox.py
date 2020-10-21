@@ -68,7 +68,7 @@ class Checkbox(Elemental):
             raise AttributeError('The property "check_indicator" is not set.  This property must be set before attempting Checkbox.is_checked()')
 
         if child_xpath:
-            child_object = Elemental(self.locator + child_xpath, f'{self.name} Child Checkbox', 'checkbox_child')
+            child_object = Elemental(self.locator + child_xpath, '{} Child Checkbox', 'checkbox_child'.format(self.name))
             child_attrs = child_object.get_attributes()
 
             for value in child_attrs.values():
