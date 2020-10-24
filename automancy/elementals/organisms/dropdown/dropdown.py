@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as wait
 from selenium.webdriver.support.ui import Select, WebDriverWait
 
-from automancy import Label
+from automancy.elementals.atoms import Label
 from automancy.core import Elemental
 
 from .dropdown_options import DropdownOptions
