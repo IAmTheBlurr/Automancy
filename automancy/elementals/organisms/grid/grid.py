@@ -147,7 +147,7 @@ class Grid(Elemental):
         setattr(segment, component.name, component.duplicate())
         segment[component.name].locator = extended_locator
 
-    def _add_components_to_segments(self, payload):
+    def _add_components_to_segments(self, _):
         """ Adds components known in Grid.segment_components to all known segments """
         for component in self.segment_components.values():
             for segment in self.segments.values():

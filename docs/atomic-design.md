@@ -31,7 +31,7 @@ My aim was to structure modules within packages in a way that makes sense within
 ## OptionsObjects (A Brief Overview)
 The topic of OptionsObjects will be covered more fully in a different document, but I felt it's worth mentioning here as an aside because of the nature of the "Organism" class of objects.
 
-There are a few objects in Automancy which are so complex, they warrant their own special object meant to store optinos which can be injected upon instantiation.
+There are a few objects in Automancy which are so complex, they warrant their own special object meant to store options which can be injected upon instantiation.
 
 Only Molecules have the level of complexity as an interface to real world DOM constructs.
 
@@ -41,6 +41,6 @@ Think of all the little buttons and sub features of a Calendar or Clock.  The fu
 
 Rather than require a billion input arguments to the Calendar or Clock classes during instantiation, "OptionsObjects" (where appropriate) are available for these Organisms.
 
-These OptionsObjects are just storage for additional locators (mostly), ready to be used for the instantiation of an Organism type object. (Gotta catchem' all!)
+These OptionsObjects are just storage for additional locators (mostly), ready to be used for the instantiation of an Organism type object. (Gotta catch'em all!)
 
 That's it, I just wanted to point out nothing less complex than an organism object will have an OptionsObject which is an important distinguishing factor for graduation to a higher tier type within Atomic Design (as I see fit MWAHAHAHAHAHA!!!!!!)

@@ -52,4 +52,4 @@ Examples of these are:
 - Table
 - Calendar
 
-An Options Object usually provides additional locators for elements commonly expected to exist.  Specific examples will be covered in How-To's to come.
+An Options Object usually provides additional locators for elements commonly expected to exist.  Specific examples will be covered in How-Tos to come.
