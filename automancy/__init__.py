@@ -1,4 +1,4 @@
-from .core import Browser, FFMPEGEncoders, Model, Sequencer, TacticalAsserts
+from .core import Browser, FFMPEGEncoders, Model, TacticalAsserts
 from .ecosystems import Page
 from .elementals.atoms import Button, Checkbox, FileInput, Image, Label, Link, Radio, SVG, SVGPath, Switch, TextInput
 from .elementals.molecules import DialogBox, Form, Modal, Slider
