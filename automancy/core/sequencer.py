@@ -36,7 +36,7 @@ class Sequencer(object):
 
         clickable = ['Button', 'Dropdown', 'Checkbox', 'Image', 'Link', 'OptionTreeBranch', 'Radio', 'Row', 'Tab']
         openable = ['Dropdown']
-        writeable = ['FileInput', 'TextBox', 'TextInput']
+        writeable = ['FileInput', 'TextInput']
 
         if callable(elemental):
             return elemental
