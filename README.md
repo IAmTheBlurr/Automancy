@@ -13,7 +13,9 @@ It's just not true, it can be a different way.  To prove it, let me show you a w
 Yes, I went there!
 
 ## Pre-requisites
-You'll need to have your favorite 
+You'll need to have your favorite browser webdriver located in a directory that is a part of the Python path variables.
+
+That's it, pretty simple.
 
 ## Installation
 
@@ -34,14 +36,23 @@ A special thing to note.  You'll notice there is no passing of the `driver` obje
 
 _Note: The current version of Automancy still requires the manual instantiation of a Selenium WebDriver object but this will not be true for much longer._
 
+Here we go, This example will be broken up into three parts and illustrate two simple ways of doing the same thing.
+1. Go to the Wikipedia main page searching for 
+2. Type "Automancy" into the search bar
+3. Click on the search button / press enter
+4. Check for the existence of an element on the results page.
+
+### Part 1 -> Setup
     from selenium import webdriver
     from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
     from automancy import Button, Label, Page, TextInput
 
     # Instantiate a Chrome WebDriver
     driver = webdriver.Chrome(options=webdriver.ChromeOptions(), desired_capabilities=DesiredCapabilities.CHROME)
 
+    # Instantiate a Page object with the wikipedia main url
+
+### Part 2-a -> Generating a Page model programmatically using the `.add(...)` method
     # Instantiate a Page object with the wikipedia main url
     wikipedia = Page(url='https://en.wikipedia.org/wiki/Main_Page')
 
@@ -50,6 +61,17 @@ _Note: The current version of Automancy still requires the manual instantiation 
     wikipedia.add(TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input'))
     wikipedia.add(Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text'))
 
+### Part 2-b -> Defining a UI Model as a persistent class
+
+    class Wikipedia(Page):
+        def __init__(self, url='https://en.wikipedia.org/wiki/Main_Page')
+        search_button = Button('//input[@id="searchButton"]', 'Search Button', 'search_button')
+        search_input = TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input')
+        not_found_text = Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text')
+
+    wikipedia = Wikipedia()
+
+### Part 3 -> Perform the actions
     # Go to the wikipedia main page
     wikipedia.visit()
     
@@ -62,6 +84,13 @@ _Note: The current version of Automancy still requires the manual instantiation 
     # Check to see if the "not found" text still exists
     if wikipedia.not_found_text.exists
         print('Forever alone...')
+
+### Considerations
+The great thing about these two methods is that you can perform the same kinds of actions with the same commands independent of how you build your models.
+
+Sometimes it might be advantageous to build a page model on the fly if you're in a situation where you've got extremely dynamic pages.  If this is the case, you could technically create many "components" (a-la React, Polymer, etc), and mirror your automation scripts to the UI design, adding objects to page models only as needed.
+
+It might also be advantageous to construct more statically defined Page models as a class to mirror components or features in a web app, able to stand on its own, able to be extended easily, able to be included in a library of models representing an entire web UI, and able to have custom functions defined within it to string together multiple Elemental actions in a single call.
 
 ## Project Structure
 This section outlines the high level thinking about the design of the modules, and the directory structure employed.
