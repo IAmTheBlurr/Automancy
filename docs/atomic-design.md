@@ -1,8 +1,8 @@
 # Atomic Design... and You!
 
-I first discovered the concept of the atomic design pattern in 2018.  I thought it was rather novel and an interesting approach to questions about how to structure modules and packages hierarchically.
+I first discovered the concept of the atomic design pattern in 2018.  I thought it was rather novel, and an interesting approach to questions about how to structure modules and packages hierarchically.
 
-I liked it a lot so I decided to play with it a bit.  It managed to stick.
+I liked it a lot, so I decided to play with it a bit.  It managed to stick.
 
 The question now is, "How is the concept of "atomic design" used within Automancy?"
 
@@ -13,7 +13,7 @@ Jokes aside, unless you're just a super documentation nerd (like me), you're pro
 
 Ok, so I guess that last line wasn't really "jokes aside", so sue me.  It's 12:24am, I'm deep into my second Honey Jack and Ginger, it's my documentation, I'll joke if I want to!
 
-Alright alright, here's how it works.
+Alright, here's how it works.
 
 There are three rules for three classifications
 
