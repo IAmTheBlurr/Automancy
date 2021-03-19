@@ -1,40 +1,46 @@
 # Automancy
-A UI Automation toolset for Python designed to greatly simply the functionality and features of Selenium.
+A Web UI Automation framework for Python, designed to simplify the functionality and features of Selenium.
 
 ## Motivation
-Selenium sucks to work with, we all know it.  It's cumbersome to write, abstract in the not-so-fun way, difficult to read (thus to maintain), and rather fragile.
+Raise your hand if you've ever thought to yourself "Man... I really don't like how Selenium code is written, it's so ugly and strangely difficult to work with..."
 
-Automancy was designed to resolve all of these annoyances, regardless of if you're intent is to scrape web pages, automate actions on a web portal, or create automated UI tests.
+No, nevermind, don't raise your hand, you'll just look weird, and I won't be able to see you anyway.
 
-The sad part is most people don't realize how easy these things can be.  They just put up with suffering through these ailments, claiming "that's just the way it is".
+We all know it, Selenium is cumbersome to write, abstract in the not-so-fun way, difficult to read (thus to maintain), and rather fragile most of the time.
 
-It's just not true, it can be a different way.  To prove it, let me show you a world.  Shining, shimmering, splendid, on an Automancy carpet ride...
+Automancy is meant to resolve these annoyances, regardless of if your intent is to scrape web pages, automate actions on a web portal, or create automated UI tests for a web app.
 
-Yes, I went there!
+The intent of Automancy is to add a greater degree of sophisticated control to web based automation while reducing the syntactic complexity of these operations and providing a design pattern meant to facilitate anti-fragility.
+
+If you treat input as error, automating away as much menial work for the operator as possible without taking away meaningful control, fundamentally, you are automating automation.
+
+Hence, Automancy, the animation of automation.
+
+![Stay awhile and listen](docs/images/stay-awhile-and-listen.jpg)
 
 ## Pre-requisites
 You'll need to have your favorite browser webdriver located in a directory that is a part of the Python path variables.
 
 That's it, pretty simple.
 
+_(If you don't know where to find a WebDriver, or if you don't know what I'm talking about, you might need to study up on some lesser arcane magic first)_
+
 ## Installation
 
     pip install automancy
 
-_(What?  You thought they would be more?)_
+_(What?  You thought there would be more?)_
 
 ## First Example
 There are many ways Automancy can be used, various styles of implementation supported, it all depends on the needs of your context.
 
-In this example scenario, we're going to automate a few actions for Wikipedia because we want to see if anyone has written a page for Automancy yet.
+This first example is intended to show a bit of executable code and to illustrate Automancy's flexibility in implementation.
 
-Only a few Elementals are used, and we're going to use the `.add(...)` method of the `Page` class to automatically associate each of our Elementals with an instance of `Page` called `wikipedia`.
+We are going to automate a few actions on Wikipedia.  We want to see if anyone has written a page for Automancy yet.
 
-We'll discuss other strategies for associating Elements with one another in other documentation later on.  It's pretty cool stuff.
+**Special Note 1**: You might notice the `driver` object is not passed to any further object in the scope.  This is not an error.  Automancy includes the ability to detect and reference WebDriver instances automatically.  This will be discussed in greater detail elsewhere.
 
-A special thing to note.  You'll notice there is no passing of the `driver` object to any further object in the scope.  You might be wondering how it's possible that any of the Automancy Elemental objects are able to control the driver instance.  Automancy includes some special sauce which detects for an instance of a driver object within the scope of the script/environment it's objects run in.  This will be discussed in greater detail elsewhere.
-
-_Note: The current version of Automancy still requires the manual instantiation of a Selenium WebDriver object but this will not be true for much longer._
+**Special Note 2**: The current version of Automancy requires the manual instantiation of a Selenium WebDriver object.  This will change before v1.0.0 is released.
 
 Here we go, This example will be broken up into three parts and illustrate two simple ways of doing the same thing.
 1. Go to the Wikipedia main page searching for 
@@ -43,47 +49,54 @@ Here we go, This example will be broken up into three parts and illustrate two s
 4. Check for the existence of an element on the results page.
 
 ### Part 1 -> Setup
-    from selenium import webdriver
-    from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-    from automancy import Button, Label, Page, TextInput
+```python
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from automancy import Button, Label, Page, TextInput
 
-    # Instantiate a Chrome WebDriver
-    driver = webdriver.Chrome(options=webdriver.ChromeOptions(), desired_capabilities=DesiredCapabilities.CHROME)
-
-    # Instantiate a Page object with the wikipedia main url
+# Instantiate a Chrome WebDriver
+driver = webdriver.Chrome(options=webdriver.ChromeOptions(), desired_capabilities=DesiredCapabilities.CHROME)
+```
 
 ### Part 2-a -> Generating a Page model programmatically using the `.add(...)` method
-    # Instantiate a Page object with the wikipedia main url
-    wikipedia = Page(url='https://en.wikipedia.org/wiki/Main_Page')
+This is the first of the two alternative methods described here for constructing a web UI model with Automancy.
+```python
+# Instantiate a Page object with the wikipedia main url
+wikipedia = Page(url='https://en.wikipedia.org/wiki/Main_Page')
 
-    # Add the necessary Elementals to the wikipedia page.
-    wikipedia.add(Button('//input[@id="searchButton"]', 'Search Button', 'search_button'))
-    wikipedia.add(TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input'))
-    wikipedia.add(Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text'))
+# Add the necessary Elementals to the wikipedia page.
+wikipedia.add(Button('//input[@id="searchButton"]', 'Search Button', 'search_button'))
+wikipedia.add(TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input'))
+wikipedia.add(Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text'))
+```
 
 ### Part 2-b -> Defining a UI Model as a persistent class
+This is the second alternate method of constructing a web UI model; either will work.
+```python
+class Wikipedia(Page):
+    def __init__(self, url='https://en.wikipedia.org/wiki/Main_Page'):
+    search_button = Button('//input[@id="searchButton"]', 'Search Button', 'search_button')
+    search_input = TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input')
+    not_found_text = Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text')
 
-    class Wikipedia(Page):
-        def __init__(self, url='https://en.wikipedia.org/wiki/Main_Page')
-        search_button = Button('//input[@id="searchButton"]', 'Search Button', 'search_button')
-        search_input = TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input')
-        not_found_text = Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text')
-
-    wikipedia = Wikipedia()
+wikipedia = Wikipedia()
+```
 
 ### Part 3 -> Perform the actions
-    # Go to the wikipedia main page
-    wikipedia.visit()
-    
-    # Input the search text
-    wikipedia.search_input.write('Automancy')
-    
-    # Click the search button
-    wikipedia.search_button.click()
-    
-    # Check to see if the "not found" text still exists
-    if wikipedia.not_found_text.exists
-        print('Forever alone...')
+```python
+# Go to the wikipedia main page
+wikipedia.visit()
+
+# Input the search text
+wikipedia.search_input.write('Automancy')
+
+# Click the search button
+wikipedia.search_button.click()
+
+# Check to see if the "not found" text still exists
+if wikipedia.not_found_text.exists
+    print('Forever alone...')
+```
 
 ### Considerations
 The great thing about these two methods is that you can perform the same kinds of actions with the same commands independent of how you build your models.
@@ -92,33 +105,10 @@ Sometimes it might be advantageous to build a page model on the fly if you're in
 
 It might also be advantageous to construct more statically defined Page models as a class to mirror components or features in a web app, able to stand on its own, able to be extended easily, able to be included in a library of models representing an entire web UI, and able to have custom functions defined within it to string together multiple Elemental actions in a single call.
 
-## Project Structure & "How to Think About Automancy"
-This section outlines the high level thinking about the design of the modules, and the directory structure employed.
+## How to Think About Automancy
+Ecosystems & Elementals.  These are the two key terms employed within Automancy which sum up the design philosophy.  Once you understand the meaning of these two terms, you'll understand Automancy.
 
-Deeper descriptions of the different modules are found in the `/docs` directory
-
-### Core
-The core modules are a bit weird.  Some are base classes for some of the more complex objects within Automancy.  Others are stand-alone in their functionality.
-
-Only a handful of modules from `core/` are described briefly here, and only at a high level.  These modules will be described in greater detail in their own reference documentation
-
-#### Browser
-**Work in Progress**
-
-#### Elemental
-**Work in Progress**
-
-#### External Javascript
-**Work in Progress**
-
-#### FFMPEG Encoders
-**Work in Progress**
-
-#### Model
-**Work in Progress**
-
-#### Tactical Asserts
-**Work in Progress**
+Here is a brief overview for simplicity's sake.  Further discussion can be found in the `docs/` directory.
 
 ### Ecosystems
 Think of the term "ecosystem" in the natural sciences.  What is an ecosystem?  It's a domain of life generally speaking, a domain of complex entities interacting with each other, usually with some sort of hierarchical relationship between everything within the domain.
@@ -127,26 +117,47 @@ This analogy is used here in Automancy.  A single web page can be thought of as 
 
 Simple ecosystems might only contain some text, a picture, and a button to interact with, while complex ecosystem might have animations, triggered DOM changes, modals, toast messages, video playback, etc.
 
-The practice of Automancy is the practice of defining what exists in an ecosystem as a "model" of reality (or at least as close to it as you might need).
-
-We'll cover more about the subject of constructing models of reality as "ecosystems" a bit later on.
+The practice of Automancy is the practice of defining what exists in an ecosystem as a "model" of reality (or at least as close to it as you need).
 
 ### Elementals
 If a web page is a complex ecosystem as in nature, you can think of what lives on a web page, the unique constituents of a DOM, as complex organisms, molecular structures, and atomic elements, embedded within each other as complexity decreases.
 
-For this reason, Automancy considers this hierarchical structure for its module and directory path conventions.
+"**Elemental**", in Automancy, is the general term used for everything from a simple `Button` to a complex `HTML5VideoPlayer` object.
 
-#### Atoms
-These are the least complex modules.  Each represent a single web element DOM object; a `<button`, or an `<a>`, but also including simple things like a checkbox, radio selector, or a text input field.  "Atom" modules are the smallest objects in Automancy
+That said, "Elementals" are intended to be considered hierarchical in nature.  A `Form` molecule will naturally contain any number of "`TextInput`" and `Button` atoms, for example.
 
-#### Molecules
-Molecules are the second smallest objects in Automancy.  These modules are meant to be used when constructing models of DOM structures such as `<form>`, a modal, a dialogbox.
+[comment]: <> (For this reason, Automancy considers this hierarchical structure for its module and directory path conventions.)
 
-Molecule objects tend to be made up of Atomic objects which are bounded by some kind of containing web element.
+There are three `Elemental` types
 
-#### Organisms
-Some Elementals you'll use to build UI models are complex enough to have their own internal object models to represent what you'd expect to see in the real world.
+- Atoms
+- Molecules
+- Organisms
 
-The `Table` and `Grid` `HTML5VideoPlayer` Elementals are two such "Organism" type objects.
+**Atoms**: The least complex `Elemental`.  Each represents a single web element DOM object; a `<button`, or an `<a>`, but also checkbox, radio selector, or a text input DOM objects.
 
-Organism modules usually contain methods for constructing xpath selectors for their children DOM elements, so you don't have to do the work of arduously defining the nitty-gritty details of each `<tr>` and `<td>`, the organism modules do that work for you with the least amount of effort on your part.
+**Molecules**: Meant to be used when constructing models of DOM structures such as `<form>`, a modal, a dialogbox; they tend to be made up of Atom objects which they contain.
+
+**Organisms**: The most complex `Elemental`, usually constructed out of many custom class objects and unique controls and internal options.  Organisms contain the means of constructing xpath selectors for their children DOM elements automatically.
+
+## Wrapping it Up
+Now you've seen a simple example of how Selenium can be simplified for the greater good.
+
+There is much more to be said, however I feel it wise to keep this initial README.md simple enough to consume and leave you, the reader, desiring more juicy details.
+
+Juicy details ye shall receive.
+
+Inside the `docs/` directory is where ongoing documentation will appear.
+
+This further documentation will take the following forms.
+
+- Tutorials: First steps for a learner, meant to introduce concepts, build confidence, inspire, not distract, etc.
+- How-Tos: Answers to specific questions about how to accomplish something in or with Automancy.
+- References: Technical specification details for each class, similar to API reference documentation (but not garbage, I hope...)
+- Discussions: High level conveyance of ideas, philosophies, and explanations for design choices.
+
+I hope you'll enjoy utilizing Automancy as much as I've enjoyed creating it so far.  Please feel free to submit issues here on GitHub when you find them, it's always appreciated.
+
+If you'd like to contribute to Automancy in any way, I'm pretty easy to reach.  The more people working on Automancy the better for all.
+
+Thank you!
