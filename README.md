@@ -92,17 +92,33 @@ Sometimes it might be advantageous to build a page model on the fly if you're in
 
 It might also be advantageous to construct more statically defined Page models as a class to mirror components or features in a web app, able to stand on its own, able to be extended easily, able to be included in a library of models representing an entire web UI, and able to have custom functions defined within it to string together multiple Elemental actions in a single call.
 
-## Project Structure
+## Project Structure & "How to Think About Automancy"
 This section outlines the high level thinking about the design of the modules, and the directory structure employed.
 
-Deeper descriptions of each module will be found further down below this section
+Deeper descriptions of the different modules are found in the `/docs` directory
 
 ### Core
-The core modules are in many ways the beating heart of Automancy.  The modules in this directory are fundamental to the operations of every module which is meant for humans to interact and write code with.
+The core modules are a bit weird.  Some are base classes for some of the more complex objects within Automancy.  Others are stand-alone in their functionality.
 
-Some core modules are exposed to be easily accessed from the top level of Automancy while others are not.  Those which are not easily importable are simply accessed by other modules directly, not really being meant for direct user access.
+Only a handful of modules from `core/` are described briefly here, and only at a high level.  These modules will be described in greater detail in their own reference documentation
 
-More details about this later.
+#### Browser
+**Work in Progress**
+
+#### Elemental
+**Work in Progress**
+
+#### External Javascript
+**Work in Progress**
+
+#### FFMPEG Encoders
+**Work in Progress**
+
+#### Model
+**Work in Progress**
+
+#### Tactical Asserts
+**Work in Progress**
 
 ### Ecosystems
 Think of the term "ecosystem" in the natural sciences.  What is an ecosystem?  It's a domain of life generally speaking, a domain of complex entities interacting with each other, usually with some sort of hierarchical relationship between everything within the domain.
@@ -133,22 +149,4 @@ Some Elementals you'll use to build UI models are complex enough to have their o
 
 The `Table` and `Grid` `HTML5VideoPlayer` Elementals are two such "Organism" type objects.
 
-Organism modules usually contain methods for constructing xpath selectors for their children DOM elements, so you don't have to do the work of arduously defining the nitty-gritty details of each `<tr>` and `<td>`, the organism modules do that work for you with the least amount of effort on your part.  
-
-## Examples
-Alright, on to the fun bits!
-
-### Elementals
-Something
-
-### Browser
-Something
-
-### Model
-Something
-
-### Tactical Asserts
-Something
-
-### External Javascript
-Dark Side
+Organism modules usually contain methods for constructing xpath selectors for their children DOM elements, so you don't have to do the work of arduously defining the nitty-gritty details of each `<tr>` and `<td>`, the organism modules do that work for you with the least amount of effort on your part.
