@@ -75,9 +75,9 @@ This is the second alternate method of constructing a web UI model; either will 
 ```python
 class Wikipedia(Page):
     def __init__(self, url='https://en.wikipedia.org/wiki/Main_Page'):
-    search_button = Button('//input[@id="searchButton"]', 'Search Button', 'search_button')
-    search_input = TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input')
-    not_found_text = Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text')
+        self.search_button = Button('//input[@id="searchButton"]', 'Search Button', 'search_button')
+        self.search_input = TextInput('//input[@id="searchInput"]', 'Search Input', 'search_input')
+        self.not_found_text = Label('//p[@class="mw-search-nonefound"]', 'Not Found Text', 'not_found_text')
 
 wikipedia = Wikipedia()
 ```
@@ -94,7 +94,7 @@ wikipedia.search_input.write('Automancy')
 wikipedia.search_button.click()
 
 # Check to see if the "not found" text still exists
-if wikipedia.not_found_text.exists
+if wikipedia.not_found_text.exists:
     print('Forever alone...')
 ```
 
