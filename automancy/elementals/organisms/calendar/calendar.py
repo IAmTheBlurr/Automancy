@@ -188,7 +188,7 @@ class Calendar(Elemental):
             self.construct_days()
 
         # Ensure that the date input value is between the number of days in the current month
-        if not 0 < day < len(self.days):
+        if not 0 < day <= len(self.days):
             raise ValueError('The "day" parameter must be between 1 and {} days'.format(len(self.days)))
 
         # Ensure that the element for the desired day is interactable before clicking on it
