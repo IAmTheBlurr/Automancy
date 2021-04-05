@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as wait
 from selenium.webdriver.support.ui import WebDriverWait
 
-from ..core import Browser, Model
+from ..core import Model
 
 
 class Page(Model):
@@ -13,7 +13,7 @@ class Page(Model):
     """
     def __init__(self, url=''):
         Model.__init__(self)
-        self.browser = Browser.find_driver()
+        self.browser = None
         self.element = None
         self.url = url
         self.locator = ''
