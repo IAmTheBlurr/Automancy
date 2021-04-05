@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as wait
 from selenium.webdriver.support.ui import WebDriverWait
 
 from .automancy_chain import AutomancyChain
+from .browser import Browser
 from .external_javascript import drag_and_drop
 
 from ..decorators import interaction
@@ -30,7 +31,7 @@ class Elemental(object):
 
         """
         super().__init__()
-        self.browser = None
+        self.browser = Browser.find_driver()
         self.__uses_w3c = uses_w3c
         self.__browser_used = ''
 
