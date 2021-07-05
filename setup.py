@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='Automancy',
-    version='0.5.1',
+    version='0.5.2',
     author='Jonathan Craig',
     author_email='blurr@iamtheblurr.com',
     classifiers=[
