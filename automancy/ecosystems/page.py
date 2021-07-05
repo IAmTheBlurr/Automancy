@@ -11,9 +11,9 @@ class Page(Model):
     Further Elementals that are created from here are child elements derived from this objects content
     Intended to manage the state of the page and webdriver related to the tests that are being run.
     """
-    def __init__(self, url=''):
+    def __init__(self, url='', browser=None):
         Model.__init__(self)
-        self.browser = Browser.find_driver()
+        self.browser = self.browser = browser if browser else Browser.find_driver()
         self.element = None
         self.url = url
         self.locator = ''
