@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name='Automancy',
-    version='0.5.2',
+    version='0.5.3',
     author='Jonathan Craig',
     author_email='blurr@iamtheblurr.com',
     long_description_content_type='text/markdown',
