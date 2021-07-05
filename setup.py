@@ -1,10 +1,13 @@
+""" ./setup.py """
 import setuptools
 
 setuptools.setup(
     name='Automancy',
-    version='0.5.1',
+    version='0.5.2',
     author='Jonathan Craig',
     author_email='blurr@iamtheblurr.com',
+    long_description_content_type='text/markdown',
+    long_description=open('README.md', encoding='utf8').read(),
     classifiers=[
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -13,7 +16,7 @@ setuptools.setup(
         'Topic :: Software Development :: Testing',
         'Topic :: Internet :: WWW/HTTP :: Browsers'
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.7',
     packages=setuptools.find_packages(),
     url='https://github.com/iamtheblurr/automancy',
     license='MIT',
@@ -24,5 +27,4 @@ setuptools.setup(
         'selenium',
         'webvtt-py',
     ],
-    long_description=open('README.md', encoding='utf8').read(),
 )
