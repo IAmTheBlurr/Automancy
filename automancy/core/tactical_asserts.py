@@ -1,6 +1,9 @@
 """ ./core/tactical_asserts.py """
 from time import sleep
 
+import chronomancy
+import inspect
+
 from automancy.core import Elemental
 
 from selenium.common.exceptions import WebDriverException
