@@ -102,6 +102,29 @@ class TacticalAsserts(object):
 
         raise AssertionError('Assertion Error: The element named "{}" did not gain visibility within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
 
+    def text_becomes_equal(self, element: Elemental, expected_text: str) -> Elemental:
+        """
+        Tactically asserts the value of the `.text` property for the passed in Elemental will become equal to the expected text.
+
+        Args:
+            element (Elemental): the `Elemental` which `.text` will be inspected for
+            expected_text (str): the string you expect to match element.text
+
+        Returns:
+            Elemental: The same Elemental object which was passed in.
+
+        """
+        while self.timeout_count < self.max_timeouts:
+            try:
+                assert element.text == expected_text
+                self.timeout_count = 0
+                return element
+            except AssertionError:
+                self.sleep(self.sleep_time)
+                self.timeout_count += self.sleep_time
+
+        raise AssertionError(f'Assertion Error: Target elements\' text did not become equal to the expected text within {self.max_timeouts} seconds, {element} != {expected_text}')
+
     def video_begins_playing(self, element):
         self.__verify_is_elemental(element)
         while self.timeout_count < self.max_timeouts:
