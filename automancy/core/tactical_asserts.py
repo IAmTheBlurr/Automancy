@@ -29,6 +29,31 @@ class TacticalAsserts(object):
         self.gains_clickability(element)
         return element
 
+    def becomes_true(self, element: Elemental) -> Elemental:
+        """
+        Tactically asserts the `Elemental` passed in will become `True` within the time expected.
+
+        Args:
+            element (Elemental): an Automancy `Elemental` object able to be resolved to `True` or `False`
+
+        Returns:
+            Elemental: The same Elemental object which was passed in.
+
+        """
+        calling_frame = inspect.stack()[1]
+
+        while self.timeout_count < self.max_timeouts:
+            try:
+                assert element is True
+                self.timeout_count = 0
+                return element
+            except AssertionError:
+                self.sleep(self.sleep_time)
+                element = chronomancy.arcane_recall(calling_frame)
+                self.timeout_count += self.sleep_time
+
+        raise AssertionError(f'Assertion Error: The element named {element.name} did not become True within {self.max_timeouts} seconds')
+
     def gains_clickability(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
         while self.timeout_count < self.max_timeouts:
