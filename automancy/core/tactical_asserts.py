@@ -1,4 +1,4 @@
-""" ./asserts/assert_core.py """
+""" ./core/tactical_asserts.py """
 from time import sleep
 
 from automancy.core import Elemental

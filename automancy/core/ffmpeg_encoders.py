@@ -1,4 +1,4 @@
-""" encoders.py -> Handlers for simplified ffmpeg use """
+""" ./core/ffmpeg_encoders.py -> Handlers for simplified ffmpeg use """
 import subprocess
 
 from typing import Union
