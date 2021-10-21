@@ -19,7 +19,7 @@ class TacticalAsserts(object):
     @staticmethod
     def __verify_is_elemental(element):
         if not issubclass(element.__class__, Elemental):
-            raise TypeError('Input element must be a subclass of Elemental, found: {}'.format(type(element)))
+            raise TypeError(f'Input element must be a subclass of Elemental, found: {type(element)}')
 
     def becomes_interactable(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
@@ -65,7 +65,7 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 time_counted += self.sleep_time
 
-        raise AssertionError('Assertion Error: The element named "{}" did not gain clickability within the timeout limit ({} seconds)'.format(element.name, self.max_timeout))
+        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not gain clickability within the timeout limit ({self.max_timeout} seconds)')
 
     def gains_existence(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
@@ -79,7 +79,7 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 time_counted += self.sleep_time
 
-        raise AssertionError('Assertion Error: The element named "{}" did not come into existence within the timeout limit ({} seconds)'.format(element.name, self.max_timeout))
+        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not come into existence within the timeout limit ({self.max_timeout} seconds)')
 
     def gains_visibility(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
@@ -101,7 +101,7 @@ class TacticalAsserts(object):
                 assert element.visible
                 return element
 
-        raise AssertionError('Assertion Error: The element named "{}" did not gain visibility within the timeout limit ({} seconds)'.format(element.name, self.max_timeout))
+        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not gain visibility within the timeout limit ({self.max_timeout} seconds)')
 
     def text_becomes_equal(self, element: Elemental, expected_text: str) -> Elemental:
         """
@@ -149,7 +149,7 @@ class TacticalAsserts(object):
                 sleep(self.sleep_time)
                 time_counted += self.sleep_time
 
-        raise AssertionError(f'Assertion Error: The expected text was not found within the text of the element named ({element.name}) text within {self.max_timeout} seconds.  {expected_text} not in {element.text}')
+        raise AssertionError(f'Assertion Error: The expected text was not found within the text of the element named ({element.name}) text within {self.max_timeout} seconds, {expected_text} not in {element.text}')
 
     def video_begins_playing(self, element):
         self.__verify_is_elemental(element)
@@ -163,4 +163,4 @@ class TacticalAsserts(object):
                 sleep(self.sleep_time)
                 time_counted += self.sleep_time
 
-        raise AssertionError('Assertion Error: Video did not begin playing within {} seconds'.format(self.max_timeout * self.sleep_time))
+        raise AssertionError(f'Assertion Error: Video did not begin playing within {self.max_timeout} seconds')
