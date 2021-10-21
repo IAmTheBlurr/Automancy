@@ -13,6 +13,7 @@ class TacticalAsserts(object):
     def __init__(self, sleep_time: float = 0.25, max_timeouts: int = 10):
         super().__init__()
         self.max_timeouts = max_timeouts
+        self.max_sleep_time = max_timeouts * sleep_time
         self.sleep_time = sleep_time
         self.timeout_count = 0
         self.sleep = sleep
@@ -124,6 +125,29 @@ class TacticalAsserts(object):
                 self.timeout_count += self.sleep_time
 
         raise AssertionError(f'Assertion Error: Target elements\' text did not become equal to the expected text within {self.max_timeouts} seconds, {element} != {expected_text}')
+
+    def text_becomes_found_in(self, element: Elemental, expected_text: str) -> Elemental:
+        """
+
+        Args:
+            element ():
+            expected_text ():
+
+        Returns:
+
+        """
+        sleep_time = 0.25
+        timeout = 0
+
+        while timeout < self.max_timeouts:
+            try:
+                assert expected_text in element.text
+                return element
+            except AssertionError:
+                sleep(sleep_time)
+                timeout += sleep_time
+
+        raise AssertionError(f'Assertion Error: The expected text was not found within the text of the element named ({element.name}) within {self.max_sleep_time} seconds.  {expected_text} not in {element.text}')
 
     def video_begins_playing(self, element):
         self.__verify_is_elemental(element)
