@@ -10,10 +10,9 @@ from selenium.common.exceptions import WebDriverException
 
 
 class TacticalAsserts(object):
-    def __init__(self, sleep_time: float = 0.25, max_timeouts: int = 10):
+    def __init__(self, sleep_time: float = 0.25, max_timeout: int = 10):
         super().__init__()
-        self.max_timeouts = max_timeouts
-        self.max_sleep_time = max_timeouts * sleep_time
+        self.max_timeout = max_timeout
         self.sleep_time = sleep_time
         self.timeout_count = 0
         self.sleep = sleep
@@ -43,7 +42,7 @@ class TacticalAsserts(object):
         """
         calling_frame = inspect.stack()[1]
 
-        while self.timeout_count < self.max_timeouts:
+        while self.timeout_count < self.max_timeout:
             try:
                 assert element is True
                 self.timeout_count = 0
@@ -53,11 +52,11 @@ class TacticalAsserts(object):
                 element = chronomancy.arcane_recall(calling_frame)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError(f'Assertion Error: The element named {element.name} did not become True within {self.max_timeouts} seconds')
+        raise AssertionError(f'Assertion Error: The element named {element.name} did not become True within {self.max_timeout} seconds')
 
     def gains_clickability(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
-        while self.timeout_count < self.max_timeouts:
+        while self.timeout_count < self.max_timeout:
             try:
                 assert element.clickable
                 self.timeout_count = 0
@@ -66,11 +65,11 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError('Assertion Error: The element named "{}" did not gain clickability within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
+        raise AssertionError('Assertion Error: The element named "{}" did not gain clickability within the timeout limit ({} seconds)'.format(element.name, self.max_timeout))
 
     def gains_existence(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
-        while self.timeout_count < self.max_timeouts:
+        while self.timeout_count < self.max_timeout:
             try:
                 assert element.exists
                 self.timeout_count = 0
@@ -79,11 +78,11 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError('Assertion Error: The element named "{}" did not come into existence within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
+        raise AssertionError('Assertion Error: The element named "{}" did not come into existence within the timeout limit ({} seconds)'.format(element.name, self.max_timeout))
 
     def gains_visibility(self, element: Elemental) -> Elemental:
         self.__verify_is_elemental(element)
-        while self.timeout_count < self.max_timeouts:
+        while self.timeout_count < self.max_timeout:
             try:
                 assert element.visible
                 self.timeout_count = 0
@@ -101,7 +100,7 @@ class TacticalAsserts(object):
                 self.timeout_count = 0
                 return element
 
-        raise AssertionError('Assertion Error: The element named "{}" did not gain visibility within the timeout limit ({} seconds)'.format(element.name, self.max_timeouts))
+        raise AssertionError('Assertion Error: The element named "{}" did not gain visibility within the timeout limit ({} seconds)'.format(element.name, self.max_timeout))
 
     def text_becomes_equal(self, element: Elemental, expected_text: str) -> Elemental:
         """
@@ -115,7 +114,7 @@ class TacticalAsserts(object):
             Elemental: The same Elemental object which was passed in.
 
         """
-        while self.timeout_count < self.max_timeouts:
+        while self.timeout_count < self.max_timeout:
             try:
                 assert element.text == expected_text
                 self.timeout_count = 0
@@ -124,7 +123,7 @@ class TacticalAsserts(object):
                 self.sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError(f'Assertion Error: Target elements\' text did not become equal to the expected text within {self.max_timeouts} seconds, {element} != {expected_text}')
+        raise AssertionError(f'Assertion Error: Target elements\' text did not become equal to the expected text within {self.max_timeout} seconds, {element} != {expected_text}')
 
     def text_becomes_found_in(self, element: Elemental, expected_text: str) -> Elemental:
         """
@@ -139,7 +138,7 @@ class TacticalAsserts(object):
         sleep_time = 0.25
         timeout = 0
 
-        while timeout < self.max_timeouts:
+        while timeout < self.max_timeout:
             try:
                 assert expected_text in element.text
                 return element
@@ -147,11 +146,11 @@ class TacticalAsserts(object):
                 sleep(sleep_time)
                 timeout += sleep_time
 
-        raise AssertionError(f'Assertion Error: The expected text was not found within the text of the element named ({element.name}) within {self.max_sleep_time} seconds.  {expected_text} not in {element.text}')
+        raise AssertionError(f'Assertion Error: The expected text was not found within the text of the element named ({element.name}) text within {self.max_timeout} seconds.  {expected_text} not in {element.text}')
 
     def video_begins_playing(self, element):
         self.__verify_is_elemental(element)
-        while self.timeout_count < self.max_timeouts:
+        while self.timeout_count < self.max_timeout:
             try:
                 assert element.is_playing()
                 return element
@@ -159,4 +158,4 @@ class TacticalAsserts(object):
                 sleep(self.sleep_time)
                 self.timeout_count += self.sleep_time
 
-        raise AssertionError('Assertion Error: Video did not begin playing within {} seconds'.format(self.max_timeouts * self.sleep_time))
+        raise AssertionError('Assertion Error: Video did not begin playing within {} seconds'.format(self.max_timeout * self.sleep_time))
