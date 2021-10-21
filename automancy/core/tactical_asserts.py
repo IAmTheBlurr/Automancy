@@ -130,12 +130,14 @@ class TacticalAsserts(object):
 
     def text_becomes_found_in(self, element: Elemental, expected_text: str) -> Elemental:
         """
+        Tactically asserts the expected text becomes found in the value of the `.text` property for the passed in Elemental.
 
         Args:
-            element ():
-            expected_text ():
+            element (Elemental): the `Elemental` which `.text` will be inspected for
+            expected_text (str): the string you expect to match element.text
 
         Returns:
+            Elemental: The same Elemental object which was passed in.
 
         """
         self.__verify_is_elemental(element)
