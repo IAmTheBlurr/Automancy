@@ -136,7 +136,7 @@ class TextInput(Elemental):
         self.write(text=text)
 
     @interaction
-    def write(self, text: str):
+    def write(self, text: str, clear_first: bool = True):
         """
         Writes text to the input field from the self.text property if the optional text argument isn't set.
 
@@ -145,6 +145,7 @@ class TextInput(Elemental):
 
         Args:
             text (str): Optional, a specific string value that could be written to
+            clear_first (bool): Optional, clears the input field first.  Defaults to True, allows the existing input text to be preserved before writing new text.
             the input field.
 
         Returns:
@@ -155,8 +156,10 @@ class TextInput(Elemental):
 
         # Repeat the send_keys command until the text we intend to input is correctly entered (or until retry maximum is hit)
         while self.value != text:
+
             # Clear the current form value
-            self.clear()
+            if clear_first:
+                self.clear()
 
             # Click the element just to make sure we have it selected
             self.click()
