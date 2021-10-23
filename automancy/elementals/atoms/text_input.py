@@ -164,7 +164,8 @@ class TextInput(Elemental):
             # Click the element just to make sure we have it selected
             self.click()
 
-            # Enter the value
+            # Enter the value after making sure the element has focus
+            self.element().send_keys(Keys.NULL)
             self.element().send_keys(text)
 
             # Raise an exception if our number of remaining attempts reaches 0
