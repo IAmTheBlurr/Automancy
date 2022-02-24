@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name='Automancy',
-    version='0.5.7',
+    version='0.5.8',
     author='Jonathan Craig',
     author_email='blurr@iamtheblurr.com',
     long_description_content_type='text/markdown',
@@ -12,6 +12,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Software Development :: Quality Assurance',
         'Topic :: Software Development :: Testing',
         'Topic :: Internet :: WWW/HTTP :: Browsers'
