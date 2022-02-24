@@ -152,25 +152,13 @@ class TextInput(Elemental):
             None
 
         """
-        attempt_counter = 20
+        # Clear the current form value
+        if clear_first:
+            self.clear()
 
-        # Repeat the send_keys command until the text we intend to input is correctly entered (or until retry maximum is hit)
-        while self.value != text:
+        # Click the element just to make sure we have it selected
+        self.click()
 
-            # Clear the current form value
-            if clear_first:
-                self.clear()
-
-            # Click the element just to make sure we have it selected
-            self.click()
-
-            # Enter the value after making sure the element has focus
-            self.element().send_keys(Keys.NULL)
-            self.element().send_keys(text)
-
-            # Raise an exception if our number of remaining attempts reaches 0
-            if attempt_counter == 0:
-                raise IOError('Unable to correctly write the expected text to the input field after 20 attempts.')
-
-            # Drop the tries remaining
-            attempt_counter -= 1
+        # Enter the value after making sure the element has focus
+        self.click()
+        self.element().send_keys(text)
