@@ -1,3 +1,6 @@
+""" ./elementals/organisms/grid/grid.py """
+from selenium.webdriver.common.by import By
+
 from automancy.core import Elemental
 from .grid_segment import GridSegment
 from .grid_segments import GridSegments
@@ -223,7 +226,7 @@ class Grid(Elemental):
             bool: True if caption segments are detected, False if not
 
         """
-        return self.browser.find_elements_by_xpath(self.segments_locator)
+        return self.browser.find_elements(By.XPATH, self.segments_locator)
 
     def include(self, elemental, overwrite=False):
         """
