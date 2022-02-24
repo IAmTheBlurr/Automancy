@@ -1,7 +1,10 @@
 """ ./elementals/organisms/calendar/calendar.py """
+from selenium.webdriver.common.by import By
+
 from automancy.core import Elemental
 from automancy.elementals.atoms import Button, Label
 from automancy.core.tactical_asserts import TacticalAsserts
+
 from .calendar_day import CalendarDay
 from .calendar_week import CalendarWeek
 from .calendar_options import CalendarOptions
@@ -49,8 +52,8 @@ class Calendar(Elemental):
         # Clear the internal weeks array to reset the state
         self.weeks = []
 
-        # Find the the elements in the DOM that represent each of the weeks
-        found_week_elements = self.browser.find_elements_by_xpath(self.locator + self.week_row_locator)
+        # Find the elements in the DOM that represent each of the weeks
+        found_week_elements = self.browser.find_elements(By.XPATH, self.locator + self.week_row_locator)
 
         # Construct objects and their individual locators based on the index that they're found at.
         for index, week in enumerate(found_week_elements, start=1):
