@@ -171,7 +171,7 @@ class Dropdown(Elemental):
             try:
                 # This first check is to see if the element actually exists or not.
                 # The Firefox webdriver acts really weird sometimes and will find an extra element that doesn't exist.
-                if self.browser.find_element_by_xpath(option_locator):
+                if self.browser.find_elements(By.XPATH, option_locator):
                     # NOTE: Dropdowns which have complex sets of options which don't conform to W3C standards should skip the wait for visibility step.
                     #       In real world experiments, dropdowns with disconnected options have issues with visibility since not all options are always loaded in).
                     # if not self.disconnected_options:

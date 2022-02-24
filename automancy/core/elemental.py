@@ -224,7 +224,7 @@ class Elemental(object):
         # Dimension values of component
         window_x_pos = self.browser.get_window_position()['x']
         window_width = self.browser.get_window_size()['width']
-        html_body_width = self.browser.find_element_by_xpath('//body').rect['width']
+        html_body_width = self.browser.find_elements(By.XPATH, '//body').rect['width']
 
         # The offset pixel amount from the screen for where the html body actually begins
         window_x_offset = window_width - html_body_width + window_x_pos
@@ -238,7 +238,7 @@ class Elemental(object):
         # Dimension values of component
         window_y_pos = self.browser.get_window_position()['y']
         window_height = self.browser.get_window_size()['height']
-        html_body_height = self.browser.find_element_by_xpath('//body').rect['height']
+        html_body_height = self.browser.find_elements(By.XPATH, '//body').rect['height']
 
         # The offset pixel amount from the screen for where the html body actually begins
         window_y_offset = window_height - html_body_height + window_y_pos
@@ -349,7 +349,7 @@ class Elemental(object):
             locator = other
 
         if self.valid_xpath(to_validate=locator):
-            elements = self.browser.find_elements_by_xpath(locator)
+            elements = self.browser.find_elements(By.XPATH, locator)
 
             if elements:
                 exists = True
@@ -606,7 +606,7 @@ class Elemental(object):
 
         """
         if self.browser:
-            return self.browser.find_elements_by_xpath(locator)
+            return self.browser.find_elements(By.XPATH, locator)
 
     def scroll_to(self):
         """
