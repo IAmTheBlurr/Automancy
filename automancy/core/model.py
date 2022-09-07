@@ -6,7 +6,7 @@ class Model(object):
     def __init__(self):
         self.__children = {}
 
-    def add(self, elemental_class, locator: str, human_name: str, system_name: str = '', overwrite: bool = False) -> None:
+    def add(self, elemental_class, locator: str, human_name: str, system_name: str = '', overwrite: bool = False, **kwargs) -> None:
         """
         Adds an Elemental based object as a child to this model
 
@@ -31,5 +31,5 @@ class Model(object):
         if not hasattr(self, system_name) or overwrite:
             # Takes the parent locator and adds the child locator to the end of it
             concatenated_locator = getattr(self, 'locator') + locator
-            setattr(self, system_name, elemental_class(concatenated_locator, human_name, system_name=system_name))
+            setattr(self, system_name, elemental_class(concatenated_locator, human_name, system_name=system_name, **kwargs))
             self.__children[system_name] = getattr(self, system_name)
