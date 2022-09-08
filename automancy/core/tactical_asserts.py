@@ -117,6 +117,24 @@ class TacticalAsserts(object):
 
         raise AssertionError(f'Assertion Error: The element named "{element.name}" did not leave existence within the timeout limit ({self.max_timeout} seconds)')
 
+    def loses_visibility(self, element: Elemental) -> Elemental:
+        self.__verify_is_elemental(element)
+        time_counted = 0
+
+        while time_counted < self.max_timeout:
+            try:
+                assert not element.visible
+                return element
+            except AssertionError:
+                self.sleep(self.sleep_time)
+                time_counted += self.sleep_time
+            except WebDriverException:
+                self.loses_existence(element)
+                assert not element.visible
+                return element
+
+        raise AssertionError(f'Assertion Error: The element named "{element.name}" did not lose visibility within the timeout limit ({self.max_timeout} seconds)')
+
     def text_becomes_equal(self, element: Elemental, expected_text: str) -> Elemental:
         """
         Tactically asserts the value of the `.text` property for the passed in Elemental will become equal to the expected text.
