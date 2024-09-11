@@ -163,10 +163,9 @@ class Dropdown(Elemental):
         option_rows = WebDriverWait(self.browser, 30).until(wait.presence_of_all_elements_located((By.XPATH, row_locator)))
 
         for index, option in enumerate(option_rows, start=1):
-
-            # Define the option locator and the Automancy object that will eventually be added to the options dictionary.
+            # Define the option locator and the Automancy object that will eventually be added to the options' dictionary.
             option_locator = '{base_path}[{index}]{selector_ext}'.format(base_path=row_locator, index=index, selector_ext=self.option_selector_extension)
-            new_option = self.options_type(option_locator, name='')
+            new_option = self.options_type(option_locator, human_name='', system_name='')
 
             try:
                 # This first check is to see if the element actually exists or not.
